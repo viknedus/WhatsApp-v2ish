@@ -14,7 +14,7 @@ function LoginPage() {
   return (
     <Container>
       <Head>
-        <title>Login</title>
+        <title>Login - WA V2</title>
       </Head>
       {/* Login Containter */}
       <LoginContainer>
