@@ -8,7 +8,6 @@ export default function Home() {
     <div>
       <Head>
         <title>WhatsApp v2.0-ish</title>
-        <meta name="description" content="Generated and built by next app" />
         <link
           rel="icon"
           href="https://avatars.githubusercontent.com/u/16660623?v=4"

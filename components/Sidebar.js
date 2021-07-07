@@ -1,7 +1,6 @@
-import { Avatar, Button } from "@material-ui/core";
+import { Avatar, Button, IconButton } from "@material-ui/core";
 import styled from "styled-components";
 import ChatIcon from "@material-ui/icons/Chat";
-import { IconButton } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import * as EmailValidator from "email-validator";
 import { auth, db } from "../firebase";
