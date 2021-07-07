@@ -1,6 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Sidebar from "../components/Sidebar";
+import Image from "next/dist/client/image";
 
 export default function Home() {
   return (
@@ -24,8 +25,8 @@ export default function Home() {
         >
           Powered by{" "}
           <span className={styles.logo}>
-            <img
-              src="https://avatars.githubusercontent.com/u/16660623?v=4"
+            <Image
+              src="/pic1.png"
               alt="Viknedus Logo"
               width="15px"
               height="15px"

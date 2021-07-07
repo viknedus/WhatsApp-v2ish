@@ -4,6 +4,7 @@ import Head from "next/head";
 import styled from "styled-components";
 import { auth, provider } from "../firebase";
 import styles from "../styles/Home.module.css";
+import Image from "next/dist/client/image";
 
 function LoginPage() {
   const signIn = () => {
@@ -32,8 +33,8 @@ function LoginPage() {
         >
           Powered by{" "}
           <span className={styles.logo}>
-            <img
-              src="https://avatars.githubusercontent.com/u/16660623?v=4"
+            <Image
+              src="/pic1.png"
               alt="Viknedus Logo"
               width="15px"
               height="15px"
