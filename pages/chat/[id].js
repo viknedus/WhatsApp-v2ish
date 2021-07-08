@@ -1,10 +1,11 @@
-import Head from "next/head";
-import Sidebar from "../../components/Sidebar";
-import styled from "styled-components";
+import React from "react";
 import { auth, db } from "../../firebase";
-import getRecipientEmail from "../../utils/getRecipientEmail";
+import styled from "styled-components";
+import Sidebar from "../../components/Sidebar";
+import ChatScreen from "../../components/ChatScreen";
+import Head from "next/head";
 import { useAuthState } from "react-firebase-hooks/auth";
-import ChatScreen from "../../components/Chatscreen";
+import getRecipientEmail from "../../utils/getRecipientEmail";
 
 function Chat({ chat, messages }) {
   const [user] = useAuthState(auth);
@@ -24,11 +25,10 @@ function Chat({ chat, messages }) {
 
 export default Chat;
 
-// this part is rendered on the server
 export async function getServerSideProps(context) {
   const ref = db.collection("chats").doc(context.query.id);
 
-  // PREP the messages on the server
+  // Prep the Messages...
   const messagesRes = await ref
     .collection("messages")
     .orderBy("timestamp", "asc")
@@ -44,7 +44,7 @@ export async function getServerSideProps(context) {
       timestamp: messages.timestamp.toDate().getTime(),
     }));
 
-  //prep the chats
+  // Prep the Chats...
   const chatRes = await ref.get();
   const chat = {
     id: chatRes.id,
@@ -61,7 +61,9 @@ export async function getServerSideProps(context) {
 
 const Container = styled.div`
   display: flex;
+  box-shadow: 1px 1px 4px -1px rgba(0, 0, 0, 0.75);
 `;
+
 const ChatContainer = styled.div`
   flex: 1;
   overflow: scroll;
@@ -69,6 +71,6 @@ const ChatContainer = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
-  --ms-overflow-style: none;
-  scrollbar-width: none;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 `;

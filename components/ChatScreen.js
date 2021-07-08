@@ -1,25 +1,24 @@
-import { Avatar, IconButton } from "@material-ui/core";
 import { useRouter } from "next/router";
+import { useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useCollection } from "react-firebase-hooks/firestore";
 import styled from "styled-components";
 import { auth, db } from "../firebase";
-import AttachFileIcon from "@material-ui/icons/AttachFile";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import { useCollection } from "react-firebase-hooks/firestore";
-import Message from "./Message";
-import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
-import MicIcon from "@material-ui/icons/Mic";
-import { useRef, useState } from "react";
-import firebase from "firebase";
 import getRecipientEmail from "../utils/getRecipientEmail";
-import Timeago from "timeago-react";
+import firebase from "firebase";
+import TimeAgo from "timeago-react";
+import { Avatar, IconButton } from "@material-ui/core";
+import AttachFileIcon from "@material-ui/icons/AttachFile";
+import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import MicIcon from "@material-ui/icons/Mic";
+import Message from "./Message";
 
 function ChatScreen({ chat, messages }) {
-  console.log(chat, messages);
   const [user] = useAuthState(auth);
-  const [input, setInput] = useState("");
   const router = useRouter();
   const endOfMessagesRef = useRef(null);
+  const [input, setInput] = useState("");
   const [messagesSnapshot] = useCollection(
     db
       .collection("chats")
@@ -52,7 +51,7 @@ function ChatScreen({ chat, messages }) {
     }
   };
 
-  const scrollToBottom = () => {
+  const ScrollToBottom = () => {
     endOfMessagesRef.current.scrollIntoView({
       behavior: "smooth",
       block: "start",
@@ -62,7 +61,6 @@ function ChatScreen({ chat, messages }) {
   const sendMessage = (e) => {
     e.preventDefault();
 
-    // Update the last seen...
     db.collection("users").doc(user.uid).set(
       {
         lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
@@ -78,12 +76,12 @@ function ChatScreen({ chat, messages }) {
     });
 
     setInput("");
-    scrollToBottom();
+
+    ScrollToBottom();
   };
 
   const recipient = recipientSnapshot?.docs?.[0]?.data();
   const recipientEmail = getRecipientEmail(chat.users, user);
-
   return (
     <Container>
       <Header>
@@ -97,9 +95,9 @@ function ChatScreen({ chat, messages }) {
           <h3>{recipientEmail}</h3>
           {recipientSnapshot ? (
             <p>
-              Last active:{" "}
+              Last active:{` `}
               {recipient?.lastSeen?.toDate() ? (
-                <Timeago datetime={recipient?.lastSeen?.toDate()} />
+                <TimeAgo datetime={recipient?.lastSeen?.toDate()} />
               ) : (
                 "Unavailable"
               )}
@@ -108,7 +106,6 @@ function ChatScreen({ chat, messages }) {
             <p>Loading Last active...</p>
           )}
         </HeaderInformation>
-
         <HeaderIcons>
           <IconButton>
             <AttachFileIcon />
@@ -126,7 +123,12 @@ function ChatScreen({ chat, messages }) {
 
       <InputContainer>
         <InsertEmoticonIcon />
-        <Input value={input} onChange={(e) => setInput(e.target.value)} />
+        <Input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          type="text"
+        />
+
         <button hidden disabled={!input} type="submit" onClick={sendMessage}>
           Send Message
         </button>
@@ -138,7 +140,10 @@ function ChatScreen({ chat, messages }) {
 
 export default ChatScreen;
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const Header = styled.div`
   position: sticky;
@@ -155,11 +160,9 @@ const Header = styled.div`
 const HeaderInformation = styled.div`
   margin-left: 15px;
   flex: 1;
-
   > h3 {
     margin-bottom: 3px;
   }
-
   > p {
     font-size: 14px;
     color: gray;
@@ -186,11 +189,11 @@ const InputContainer = styled.form`
 
 const Input = styled.input`
   flex: 1;
-  outline: none;
+  outline: 0;
   border: none;
   border-radius: 10px;
-  padding: 20px;
   background-color: whitesmoke;
+  padding: 20px;
   margin-left: 15px;
   margin-right: 15px;
 `;
