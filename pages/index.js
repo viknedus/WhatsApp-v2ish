@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Sidebar from "../components/Sidebar";
-import Image from "next/dist/client/image";
+import Image from "next/image";
 
 export default function Home() {
   return (

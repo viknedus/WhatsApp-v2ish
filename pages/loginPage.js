@@ -4,7 +4,7 @@ import Head from "next/head";
 import styled from "styled-components";
 import { auth, provider } from "../firebase";
 import styles from "../styles/Home.module.css";
-import Image from "next/dist/client/image";
+import Image from "next/Image";
 
 function LoginPage() {
   const signIn = () => {
