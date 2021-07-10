@@ -1,32 +1,34 @@
 import { Avatar, Button, IconButton } from "@material-ui/core";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../firebase";
+import { auth, db } from "../firebase.js";
 import ChatIcon from "@material-ui/icons/Chat";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
-import Chat from "./Chat";
+import Chat from "./Chat.js";
 import { useCollection } from "react-firebase-hooks/firestore";
 import * as EmailValidator from "email-validator";
-import Dropdown from "./menus/Dropdown";
+import Loading from "./Loading.js";
 
-function Sidebar() {
+export default function Sidebar() {
   const [user] = useAuthState(auth);
   const userChatsRef = db
     .collection("chats")
     .where("users", "array-contains", user.email);
   const [chatsSnapshot, loading] = useCollection(userChatsRef);
+  if (loading) return <Loading />;
 
   const createChat = () => {
     const input = prompt(
       "Please enter an email address for the user you wish to chat with"
     );
 
-    if (!input) return;
+    if (!input) return; // return null
 
     if (
       EmailValidator.validate(input) &&
-      !chatAlreadyExist(input) &&
+      !chatAlreadyExists(input) &&
       input !== user.email
     ) {
       db.collection("chats").add({
@@ -35,7 +37,7 @@ function Sidebar() {
     }
   };
 
-  const chatAlreadyExist = (recipientEmail) =>
+  const chatAlreadyExists = (recipientEmail) =>
     !!chatsSnapshot?.docs.find(
       (chat) =>
         chat.data().users.find((user) => user === recipientEmail)?.length > 0
@@ -44,13 +46,19 @@ function Sidebar() {
   return (
     <Container>
       <Header>
-        <UserAvatar onClick={() => auth.signOut()} src={user.photoURL} />
+        <UserAvatar src={user.photoURL} />
 
         <IconsContainer>
           <IconButton>
             <ChatIcon />
           </IconButton>
-          <Dropdown />
+          <IconButton
+            onClick={() => {
+              auth.signOut();
+            }}
+          >
+            <ExitToAppIcon />
+          </IconButton>
         </IconsContainer>
       </Header>
 
@@ -69,8 +77,7 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
-
+// Styled Components
 const Container = styled.div`
   flex: 0.45;
   border-right: 1px solid whitesmoke;
@@ -78,6 +85,7 @@ const Container = styled.div`
   min-width: 300px;
   max-width: 350px;
   overflow-y: scroll;
+
   ::-webkit-scrollbar {
     display: none;
   }

@@ -2,11 +2,11 @@ import { Button } from "@material-ui/core";
 import { WhatsApp } from "@material-ui/icons";
 import Head from "next/head";
 import styled from "styled-components";
-import { auth, provider } from "../firebase";
+import { auth, provider } from "../firebase.js";
 import styles from "../styles/Home.module.css";
-import Image from "next/Image";
+import Image from "next/image";
 
-function LoginPage() {
+export default function LoginPage() {
   const signIn = () => {
     auth.signInWithPopup(provider).catch(alert);
   };
@@ -45,8 +45,6 @@ function LoginPage() {
     </Container>
   );
 }
-
-export default LoginPage;
 
 // Styled CSS
 const Container = styled.div`

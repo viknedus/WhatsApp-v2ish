@@ -1,13 +1,13 @@
 import React from "react";
-import { auth, db } from "../../firebase";
+import { auth, db } from "../../firebase.js";
 import styled from "styled-components";
-import Sidebar from "../../components/Sidebar";
-import ChatScreen from "../../components/ChatScreen";
+import Sidebar from "../../components/Sidebar.js";
+import ChatScreen from "../../components/ChatScreen.js";
 import Head from "next/head";
 import { useAuthState } from "react-firebase-hooks/auth";
-import getRecipientEmail from "../../utils/getRecipientEmail";
+import getRecipientEmail from "../../utils/getRecipientEmail.js";
 
-function Chat({ chat, messages }) {
+export default function Chat({ chat, messages }) {
   const [user] = useAuthState(auth);
 
   return (
@@ -23,12 +23,10 @@ function Chat({ chat, messages }) {
   );
 }
 
-export default Chat;
-
 export async function getServerSideProps(context) {
   const ref = db.collection("chats").doc(context.query.id);
 
-  // Prep the Messages...
+  // PREP the Messages...
   const messagesRes = await ref
     .collection("messages")
     .orderBy("timestamp", "asc")
@@ -44,7 +42,7 @@ export async function getServerSideProps(context) {
       timestamp: messages.timestamp.toDate().getTime(),
     }));
 
-  // Prep the Chats...
+  // PREP the Chats...
   const chatRes = await ref.get();
   const chat = {
     id: chatRes.id,
@@ -58,6 +56,8 @@ export async function getServerSideProps(context) {
     },
   };
 }
+
+// Styled Components
 
 const Container = styled.div`
   display: flex;

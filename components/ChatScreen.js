@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
 import styled from "styled-components";
-import { auth, db } from "../firebase";
+import { auth, db } from "../firebase.js";
 import getRecipientEmail from "../utils/getRecipientEmail";
 import firebase from "firebase";
 import TimeAgo from "timeago-react";
@@ -12,9 +12,9 @@ import AttachFileIcon from "@material-ui/icons/AttachFile";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import MicIcon from "@material-ui/icons/Mic";
-import Message from "./Message";
+import Message from "./Message.js";
 
-function ChatScreen({ chat, messages }) {
+export default function ChatScreen({ chat, messages }) {
   const [user] = useAuthState(auth);
   const router = useRouter();
   const endOfMessagesRef = useRef(null);
@@ -138,7 +138,7 @@ function ChatScreen({ chat, messages }) {
   );
 }
 
-export default ChatScreen;
+// Styled-Components
 
 const Container = styled.div`
   display: flex;
@@ -193,9 +193,11 @@ const Input = styled.input`
   border: none;
   border-radius: 10px;
   background-color: whitesmoke;
-  padding: 20px;
+  padding: 10px;
   margin-left: 15px;
   margin-right: 15px;
+  font-weight: bold;
+  font-size: 15px;
 `;
 
 const EndOfMessage = styled.div`

@@ -1,9 +1,9 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import styled from "styled-components";
-import { auth } from "../firebase";
+import { auth } from "../firebase.js";
 import moment from "moment";
 
-function Message({ user, message }) {
+export default function Message({ user, message }) {
   const [userLoggedIn] = useAuthState(auth);
 
   const TypeOfMessage = user === userLoggedIn.email ? Sender : Reciever;
@@ -20,8 +20,7 @@ function Message({ user, message }) {
   );
 }
 
-export default Message;
-
+//  Styled Components
 const Container = styled.div``;
 
 const MessageElement = styled.p`

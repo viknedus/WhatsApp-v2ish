@@ -4,10 +4,10 @@ import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
 import styled from "styled-components";
-import { auth, db } from "../firebase";
-import getRecipientEmail from "../utils/getRecipientEmail";
+import { auth, db } from "../firebase.js";
+import getRecipientEmail from "../utils/getRecipientEmail.js";
 
-function Chat({ id, users }) {
+export default function Chat({ id, users }) {
   const router = useRouter();
   const [user] = useAuthState(auth);
   const [recipientSnapshot] = useCollection(
@@ -33,8 +33,7 @@ function Chat({ id, users }) {
   );
 }
 
-export default Chat;
-
+// Styled Components
 const Container = styled.div`
   display: flex;
   align-items: center;

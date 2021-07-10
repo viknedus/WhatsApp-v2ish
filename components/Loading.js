@@ -1,20 +1,18 @@
-import { WhatsApp } from "@material-ui/icons";
-import { Circle } from "better-react-spinkit";
+import WhatsAppIcon from "@material-ui/icons/WhatsApp";
+import { ThreeBounce } from "better-react-spinkit";
 
-function Loading() {
+export default function Loading() {
   return (
     <center style={{ display: "grid", placeItems: "center", height: "100vh" }}>
       <div>
-        <WhatsApp
-          // style={{ marginBottom: 10 }}
-          height="200px"
-          width="200px"
+        <WhatsAppIcon
+          fontSize="large"
+          // height={200}
+          // width={80}
           color="primary"
-        />
-        <Circle color="#3cbc28" size={250} />
+        />{" "}
+        <ThreeBounce color="#3cbc28" size={20} />
       </div>
     </center>
   );
 }
-
-export default Loading;
