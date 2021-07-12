@@ -1,6 +1,6 @@
 {
   "name": "whatsapp-v2ish",
-  "version": "1.22.10",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
